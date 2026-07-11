@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>叠方块互动小游戏</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -10,8 +10,11 @@
   <main class="game-shell">
     <section class="info-panel" aria-label="游戏说明">
       <span class="badge">Stack Block</span>
-      <h1>叠方块<br />挑战</h1>
-      <p class="subtitle">把移动中的方块精准叠到下方平台上。越叠越高，速度越快；偏移的部分会被切掉，完全错过则游戏结束。</p>
+      <h1 class="title">
+        <span class="title-main">叠方块</span>
+        <span class="title-sub">挑战</span>
+      </h1>
+      <p class="subtitle">把移动中的方块精准叠到下方平台上。越叠越高，速度越快；偏移的部分会被切掉，完全错过则游戏结束。定个小目标，先来1000层！</p>
 
       <div class="stats" aria-label="游戏数据">
         <div class="stat">
@@ -26,20 +29,38 @@
           <span>连击</span>
           <strong id="combo">0</strong>
         </div>
+        <div class="stat">
+          <span>金币 🪙</span>
+          <strong id="coins">0</strong>
+        </div>
+      </div>
+
+      <div class="powerups" id="powerups" aria-label="道具栏">
+        <button class="powerup" data-power="freeze" type="button" title="冰冻：接下来 3 块速度减半（快捷键 1）">
+          <span class="p-icon">❄️</span>
+          <span class="p-name">冰冻</span>
+          <span class="p-count">0</span>
+        </button>
+        <button class="powerup" data-power="widen" type="button" title="加宽：下一块宽度大幅恢复（快捷键 2）">
+          <span class="p-icon">➕</span>
+          <span class="p-name">加宽</span>
+          <span class="p-count">0</span>
+        </button>
+        <button class="powerup" data-power="magnet" type="button" title="磁吸：下一块自动完美对齐（快捷键 3）">
+          <span class="p-icon">🧲</span>
+          <span class="p-name">磁吸</span>
+          <span class="p-count">0</span>
+        </button>
       </div>
 
       <div class="controls">
-        <button id="startBtn" type="button">开始游戏</button>
-        <button id="restartBtn" class="secondary" type="button">重新开始</button>
-      </div>
-
-      <div class="how-to">
-        <h2>玩法</h2>
-        <ul>
-          <li>点击画布、按空格 / Enter / ↓，或手机点击「落下」。</li>
-          <li>越接近下方方块越容易触发 Perfect 连击。</li>
-          <li>连击会轻微扩展方块宽度，帮助你翻盘。</li>
-        </ul>
+        <div class="btn-row">
+          <button id="startBtn" type="button">开始游戏</button>
+          <button id="restartBtn" class="secondary" type="button">重新开始</button>
+          <button id="pauseBtn" class="secondary" type="button">暂停</button>
+          <button id="muteBtn" class="secondary" type="button">🔊 音效</button>
+        </div>
+        <button id="rulesBtn" class="secondary rules-trigger" type="button">玩法与技巧</button>
       </div>
     </section>
 
@@ -47,6 +68,7 @@
       <div class="canvas-wrap">
         <canvas id="gameCanvas" width="720" height="900" aria-label="叠方块游戏画布"></canvas>
         <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div id="effectChip" class="effect-chip" aria-live="polite"></div>
         <div id="overlay" class="overlay">
           <div class="overlay-card">
             <h2 id="overlayTitle">叠方块</h2>
@@ -57,6 +79,23 @@
         <button id="dropBtn" class="mobile-action" type="button">落下</button>
       </div>
     </section>
+
+    <div class="rules-modal" id="rulesModal" hidden>
+      <div class="rules-card" role="dialog" aria-modal="true" aria-label="玩法与技巧">
+        <button class="rules-close" id="rulesClose" type="button" aria-label="关闭">×</button>
+        <h2>玩法与技巧</h2>
+        <ul>
+          <li>点击画布、按空格 / Enter / ↓，或手机点击「落下」。</li>
+          <li>对齐触发 <b>Perfect</b> 连击，方块会变宽、画面发光。</li>
+          <li>初始方块偏短，<b>连续 5 次完美对齐</b>方块会明显加长，越稳越占优。</li>
+          <li>金币需落在保留区内才收集；每 8 枚赠送随机道具。</li>
+          <li>道具：❄️冰冻、➕加宽、🧲磁吸（快捷键 1 / 2 / 3）。</li>
+          <li>随高度切换生物群系，20 层后出现风力挑战。</li>
+          <li>快捷键：P 暂停 · M 静音。</li>
+        </ul>
+        <button class="rules-ok" id="rulesOk" type="button">开始挑战</button>
+      </div>
+    </div>
   </main>
 
   <script src="game.js"></script>

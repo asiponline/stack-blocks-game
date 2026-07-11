@@ -8,3 +8,7 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Project / workspace data (not part of the game)
+.workbuddy/
+node_modules/
