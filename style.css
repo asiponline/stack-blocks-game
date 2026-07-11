@@ -435,6 +435,8 @@ button.secondary {
     background: transparent;
     overflow: hidden;
     z-index: 1;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .canvas-wrap {
@@ -465,6 +467,11 @@ button.secondary {
     border-radius: 0;
     max-height: none;
     min-height: 0;
+    /* 关键修复：关掉 backdrop-filter，否则它会让 .info-panel
+       形成堆叠上下文，把内部 HUD（分数/技能/菜单面板）整体压在
+       铺满全屏的 .stage-card 画布之下，导致看不见也点不开。 */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   .info-panel > .badge,
   .info-panel > .title,
