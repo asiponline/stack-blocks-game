@@ -1,0 +1,250 @@
+:root {
+  --bg: #101626;
+  --panel: rgba(255, 255, 255, 0.09);
+  --panel-strong: rgba(255, 255, 255, 0.16);
+  --text: #f7fbff;
+  --muted: #9fb0c7;
+  --accent: #65e6c8;
+  --accent-2: #7aa7ff;
+  --danger: #ff6b8b;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+}
+
+* { box-sizing: border-box; }
+
+html,
+body { margin: 0; min-height: 100%; }
+
+body {
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(101, 230, 200, 0.22), transparent 34rem),
+    radial-gradient(circle at right 20%, rgba(122, 167, 255, 0.25), transparent 30rem),
+    linear-gradient(135deg, #0c1220 0%, #141b30 48%, #0f1728 100%);
+  overflow-x: hidden;
+}
+
+.game-shell {
+  width: min(1180px, calc(100vw - 32px));
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 32px 0;
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) minmax(320px, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.info-panel,
+.stage-card {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(22px);
+}
+
+.info-panel {
+  border-radius: 32px;
+  padding: 30px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  color: #06141a;
+  background: linear-gradient(135deg, var(--accent), #b6fff0);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+h1 {
+  margin: 24px 0 12px;
+  font-size: clamp(36px, 6vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.07em;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 0 0 24px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 24px 0;
+}
+
+.stat {
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.stat strong {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.controls { display: flex; flex-wrap: wrap; gap: 12px; }
+
+button {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  border-radius: 16px;
+  padding: 13px 18px;
+  color: #07121b;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  font-weight: 900;
+  box-shadow: 0 14px 28px rgba(101, 230, 200, 0.18);
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+button:hover { transform: translateY(-2px); filter: brightness(1.05); }
+button:active { transform: translateY(0); }
+
+button.secondary {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.how-to {
+  margin-top: 26px;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.how-to h2 { margin: 0 0 12px; font-size: 18px; }
+.how-to ul { margin: 0; padding-left: 20px; color: var(--muted); line-height: 1.8; }
+
+.stage-card {
+  position: relative;
+  border-radius: 36px;
+  padding: 18px;
+  min-height: 680px;
+}
+
+.canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: min(78vh, 700px);
+  min-height: 540px;
+  overflow: hidden;
+  border-radius: 28px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(13, 20, 35, 0.45), rgba(10, 14, 24, 0.9));
+  background-size: 36px 36px, 36px 36px, 100% 100%;
+}
+
+#gameCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: rgba(6, 10, 18, 0.44);
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.overlay-card {
+  width: min(440px, 100%);
+  padding: 28px;
+  text-align: center;
+  border-radius: 28px;
+  background: rgba(13, 19, 32, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: var(--shadow);
+}
+
+.overlay-card h2 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 4vw, 44px);
+}
+
+.overlay-card p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.mobile-action {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  width: min(220px, 62%);
+  padding: 16px;
+  border-radius: 999px;
+  opacity: 0.96;
+}
+
+.feedback {
+  position: absolute;
+  top: 26px;
+  left: 50%;
+  min-width: 120px;
+  transform: translate(-50%, -16px);
+  text-align: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(101, 230, 200, 0.16);
+  border: 1px solid rgba(101, 230, 200, 0.32);
+  color: #cffff6;
+  font-weight: 900;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.feedback.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 880px) {
+  .game-shell {
+    grid-template-columns: 1fr;
+    align-items: start;
+    padding: 18px 0;
+  }
+
+  .info-panel { padding: 22px; }
+  .stage-card { min-height: auto; padding: 10px; border-radius: 26px; }
+  .canvas-wrap { height: 62vh; min-height: 440px; border-radius: 20px; }
+  .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat { padding: 12px 10px; }
+  .stat strong { font-size: 22px; }
+}
+
+@media (pointer: fine) {
+  .mobile-action { display: none; }
+}

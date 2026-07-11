@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>叠方块互动小游戏</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell">
+    <section class="info-panel" aria-label="游戏说明">
+      <span class="badge">Stack Block</span>
+      <h1>叠方块<br />挑战</h1>
+      <p class="subtitle">把移动中的方块精准叠到下方平台上。越叠越高，速度越快；偏移的部分会被切掉，完全错过则游戏结束。</p>
+
+      <div class="stats" aria-label="游戏数据">
+        <div class="stat">
+          <span>当前层数</span>
+          <strong id="score">0</strong>
+        </div>
+        <div class="stat">
+          <span>最高纪录</span>
+          <strong id="best">0</strong>
+        </div>
+        <div class="stat">
+          <span>连击</span>
+          <strong id="combo">0</strong>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="startBtn" type="button">开始游戏</button>
+        <button id="restartBtn" class="secondary" type="button">重新开始</button>
+      </div>
+
+      <div class="how-to">
+        <h2>玩法</h2>
+        <ul>
+          <li>点击画布、按空格 / Enter / ↓，或手机点击「落下」。</li>
+          <li>越接近下方方块越容易触发 Perfect 连击。</li>
+          <li>连击会轻微扩展方块宽度，帮助你翻盘。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="stage-card" aria-label="游戏区域">
+      <div class="canvas-wrap">
+        <canvas id="gameCanvas" width="720" height="900" aria-label="叠方块游戏画布"></canvas>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div id="overlay" class="overlay">
+          <div class="overlay-card">
+            <h2 id="overlayTitle">叠方块</h2>
+            <p id="overlayText">在方块移动到合适位置时点击落下，重叠部分会保留，失手则游戏结束。</p>
+            <button id="overlayAction" type="button">开始挑战</button>
+          </div>
+        </div>
+        <button id="dropBtn" class="mobile-action" type="button">落下</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
