@@ -551,10 +551,12 @@ function showOverlay(title, text, action) {
   overlayText.textContent = text;
   overlayAction.textContent = action;
   overlay.classList.remove('hidden');
+  document.body.classList.add('overlay-open'); // 手机端隐藏浮动 HUD，避免与弹层重叠
 }
 
 function hideOverlay() {
   overlay.classList.add('hidden');
+  document.body.classList.remove('overlay-open');
 }
 
 function showFeedback(text) {
@@ -940,6 +942,32 @@ if (window.ResizeObserver) {
 muteBtn.textContent = state.muted ? '🔇 静音' : '🔊 音效';
 requestAnimationFrame(loop); // 先启动循环，即使首帧布局未就绪也能自动恢复
 try { resize(); } catch (e) { if (typeof console !== 'undefined') console.error(e); }
+
+// 手机端折叠菜单：右上角按钮展开/收起操作面板
+(function setupMenuToggle() {
+  const menuToggle = document.getElementById('menuToggle');
+  const controls = document.querySelector('.controls');
+  if (!menuToggle || !controls) return;
+
+  const closeMenu = () => controls.classList.remove('open');
+
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    controls.classList.toggle('open');
+  });
+
+  // 点击面板内任意按钮后收起（让按钮自身的点击动作先执行）
+  controls.addEventListener('click', (e) => {
+    if (e.target.closest('button')) setTimeout(closeMenu, 0);
+  });
+
+  // 点击面板与按钮以外的区域收起
+  document.addEventListener('click', (e) => {
+    if (controls.classList.contains('open') && !controls.contains(e.target) && e.target !== menuToggle) {
+      closeMenu();
+    }
+  });
+})();
 
 // 玩法与技巧弹窗
 (function setupRulesModal() {
