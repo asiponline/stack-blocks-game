@@ -349,6 +349,7 @@ button.secondary {
 }
 
 .mobile-action {
+  display: none; /* 手机端完全通过点击屏幕交互，不再显示「落下」按钮 */
   position: absolute;
   left: 50%;
   bottom: max(28px, env(safe-area-inset-bottom));
@@ -408,7 +409,7 @@ button.secondary {
       max(14px, env(safe-area-inset-top))
       0
       max(14px, env(safe-area-inset-bottom));
-    gap: 16px;
+    gap: 14px;
   }
 
   /* 手机上游戏画面优先置顶，操作区在下方 */
@@ -435,27 +436,49 @@ button.secondary {
     border-radius: 22px;
   }
 
-  .title { margin: 10px 0 8px; }
+  /* 标题区 */
+  .badge { font-size: 12px; }
+  .title { margin: 10px 0 6px; }
   .title-main { font-size: clamp(34px, 11vw, 54px); }
   .title-sub { font-size: clamp(20px, 7vw, 34px); }
   .subtitle { font-size: 13.5px; margin-bottom: 14px; line-height: 1.55; }
 
-  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 14px 0; }
-  .stat { padding: 11px 10px; border-radius: 15px; }
-  .stat strong { font-size: 22px; }
+  /* 数据框：2x2，内容居中，统一对齐 */
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+  .stat {
+    padding: 12px 8px;
+    border-radius: 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .stat span { margin-bottom: 4px; }
+  .stat strong { font-size: 24px; }
 
-  .powerups { gap: 8px; margin: 4px 0 12px; }
-  .powerup { padding: 10px 6px; border-radius: 15px; }
-  .powerup .p-icon { font-size: 20px; }
+  /* 道具：三等分，居中 */
+  .powerups { grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 4px 0 14px; }
+  .powerup { padding: 12px 6px; border-radius: 16px; }
+  .powerup .p-icon { font-size: 22px; }
 
-  .btn-row { gap: 8px; }
-  .btn-row button { padding: 13px 6px; font-size: 13px; border-radius: 14px; }
-  .rules-trigger { padding: 13px; border-radius: 14px; }
+  /* 按钮：四个同排、等宽、内容居中，整齐统一 */
+  .controls { gap: 10px; }
+  .btn-row { gap: 10px; }
+  .btn-row button {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1.15;
+    padding: 14px 6px;
+    font-size: 14px;
+    border-radius: 14px;
+  }
+  .rules-trigger { width: 100%; padding: 14px; border-radius: 14px; font-size: 14px; }
 
-  .effect-chip { bottom: 76px; font-size: 12px; left: 12px; max-width: calc(100% - 24px); }
+  .effect-chip { bottom: 16px; font-size: 12px; left: 12px; right: 12px; max-width: none; }
   .feedback { top: 16px; }
-}
-
-@media (pointer: fine) {
-  .mobile-action { display: none; }
 }
