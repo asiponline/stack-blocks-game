@@ -417,7 +417,10 @@ button.secondary {
     order: -1;
     padding: 0;
     min-height: auto;
-    border-radius: 22px;
+    border: 0;          /* 去掉外层框，避免与画布边框形成双框、宽窄不一 */
+    box-shadow: none;
+    background: transparent;
+    border-radius: 18px;
   }
 
   .canvas-wrap {

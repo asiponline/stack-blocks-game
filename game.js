@@ -127,15 +127,20 @@ function sfx(kind) {
 
 /* ---------- Layout ---------- */
 function resize() {
-  const rect = canvas.parentElement.getBoundingClientRect();
+  // 直接测量画布自身（它已是 100% 占父元素内容区，不含容器 1px 边框），
+  // 避免把「含边框的父元素宽度」当作画布尺寸，导致缓冲比显示区大 2px、
+  // 画布溢出/被裁、边框两侧宽窄不一。
+  const rect = canvas.getBoundingClientRect();
   if (!rect || rect.width < 2 || rect.height < 2) return; // 布局尚未就绪，等下一帧
   state.dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = Math.max(1, Math.floor(rect.width * state.dpr));
+  const h = Math.max(1, Math.floor(rect.height * state.dpr));
+  if (canvas.width !== w || canvas.height !== h) {
+    canvas.width = w;
+    canvas.height = h;
+  }
   state.width = rect.width;
   state.height = rect.height;
-  canvas.width = Math.floor(rect.width * state.dpr);
-  canvas.height = Math.floor(rect.height * state.dpr);
-  canvas.style.width = `${rect.width}px`;
-  canvas.style.height = `${rect.height}px`;
   ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
   initStars();
   if (!state.running && !state.ended) reset(false);
